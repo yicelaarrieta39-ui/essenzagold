@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: page('Usuarios', 'usuarios', ~{::main})}">
+<main data-module="usuarios">
+    <div class="page-intro">
+        <div><span class="eyebrow">EQUIPO ESSENZA</span><h1>Personas que crean experiencias</h1><p>Administra el acceso y la información del equipo de tu perfumería.</p></div>
+        <button class="btn btn-gold" type="button" data-form-toggle="userFormCard"><i class="bi bi-person-plus"></i> Nuevo usuario</button>
+    </div>
+    <section class="content-card editor-card d-none" id="userFormCard">
+        <div class="section-heading compact"><div><span class="eyebrow">PERFIL DE EQUIPO</span><h2 id="userFormTitle">Registrar usuario</h2></div><button class="icon-button" type="button" data-form-toggle="userFormCard" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button></div>
+        <form id="userForm" th:action="@{/api/usuarios}" method="post" data-entity-form="usuarios" novalidate>
+            <input type="hidden" name="idUsuario">
+            <div class="form-grid">
+                <label class="form-label">Nombre<input class="form-control" name="nombre" required maxlength="100" autocomplete="given-name"></label>
+                <label class="form-label">Apellido<input class="form-control" name="apellido" required maxlength="100" autocomplete="family-name"></label>
+                <label class="form-label">Documento<input class="form-control" name="documento" required maxlength="20"></label>
+                <label class="form-label">Correo electrónico<input class="form-control" type="email" name="correo" required maxlength="120"></label>
+                <label class="form-label">Teléfono<input class="form-control" name="telefono" maxlength="20"></label>
+                <label class="form-label">Dirección<input class="form-control" name="direccion" maxlength="200"></label>
+                <label class="form-label">Rol<select class="form-select" name="rol" required><option value="Administrador">Administrador</option><option value="Vendedor">Vendedor</option><option value="Almacenista">Almacenista</option></select></label>
+                <label class="form-label">Estado<select class="form-select" name="estado" required><option value="Activo">Activo</option><option value="Inactivo">Inactivo</option></select></label>
+                <label class="form-label form-span-2">Contraseña <span class="optional-note" id="passwordHint">requerida para usuarios nuevos</span><input class="form-control" type="password" name="contrasena" minlength="8" autocomplete="new-password"></label>
+            </div>
+            <div class="form-actions"><button class="btn btn-outline-gold" type="button" data-form-toggle="userFormCard">Cancelar</button><button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Guardar usuario</button></div>
+        </form>
+    </section>
+    <section class="content-card">
+        <div class="section-heading compact list-heading"><div><span class="eyebrow">DIRECTORIO</span><h2>Usuarios registrados</h2></div><form class="search-box" method="get" th:action="@{/usuarios}"><i class="bi bi-search"></i><input id="tableSearch" name="q" type="search" placeholder="Buscar usuario..." aria-label="Buscar usuario"><button class="search-submit" type="submit" aria-label="Buscar"><i class="bi bi-arrow-return-left"></i></button></form></div>
+        <div class="table-responsive">
+            <table class="table luxury-table align-middle"><thead><tr><th>Nombre</th><th>Documento</th><th>Contacto</th><th>Rol</th><th>Estado</th><th class="text-end">Acciones</th></tr></thead><tbody id="recordsTable"></tbody></table>
+        </div>
+        <div class="empty-state d-none" id="emptyState"><span class="empty-icon"><i class="bi bi-person-lines-fill"></i></span><strong>No hay usuarios para mostrar</strong><p>Registra el equipo o ajusta la búsqueda.</p></div>
+    </section>
+</main>
+</html>

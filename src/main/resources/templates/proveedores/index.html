@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: page('Proveedores', 'proveedores', ~{::main})}">
+<main data-module="proveedores">
+    <div class="page-intro">
+        <div><span class="eyebrow">ALIADOS DE CONFIANZA</span><h1>Proveedores</h1><p>Gestiona las casas y aliados que dan vida a tus fragancias.</p></div>
+        <button class="btn btn-gold" type="button" data-form-toggle="supplierFormCard"><i class="bi bi-building-add"></i> Nuevo proveedor</button>
+    </div>
+    <section class="content-card editor-card d-none" id="supplierFormCard">
+        <div class="section-heading compact"><div><span class="eyebrow">NUEVO ALIADO</span><h2 id="supplierFormTitle">Registrar proveedor</h2></div><button class="icon-button" type="button" data-form-toggle="supplierFormCard" aria-label="Cerrar"><i class="bi bi-x-lg"></i></button></div>
+        <form id="supplierForm" th:action="@{/api/proveedores}" method="post" data-entity-form="proveedores" novalidate>
+            <input type="hidden" name="idProveedor">
+            <div class="form-grid">
+                <label class="form-label">Nombre de empresa<input class="form-control" name="nombreEmpresa" required maxlength="150"></label>
+                <label class="form-label">NIT<input class="form-control" name="nit" required maxlength="30"></label>
+                <label class="form-label">Persona de contacto<input class="form-control" name="contacto" maxlength="100"></label>
+                <label class="form-label">Teléfono<input class="form-control" name="telefono" maxlength="20"></label>
+                <label class="form-label">Correo electrónico<input class="form-control" type="email" name="correo" maxlength="120"></label>
+                <label class="form-label">Ciudad<input class="form-control" name="ciudad" maxlength="100"></label>
+                <label class="form-label form-span-2">Dirección<input class="form-control" name="direccion" maxlength="200"></label>
+                <label class="form-label">Estado<select class="form-select" name="estado" required><option value="Activo">Activo</option><option value="Inactivo">Inactivo</option></select></label>
+            </div>
+            <div class="form-actions"><button class="btn btn-outline-gold" type="button" data-form-toggle="supplierFormCard">Cancelar</button><button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Guardar proveedor</button></div>
+        </form>
+    </section>
+    <section class="content-card">
+        <div class="section-heading compact list-heading"><div><span class="eyebrow">RED COMERCIAL</span><h2>Directorio de proveedores</h2></div><form class="search-box" method="get" th:action="@{/proveedores}"><i class="bi bi-search"></i><input id="tableSearch" name="q" type="search" placeholder="Buscar proveedor..." aria-label="Buscar proveedor"><button class="search-submit" type="submit" aria-label="Buscar"><i class="bi bi-arrow-return-left"></i></button></form></div>
+        <div class="table-responsive"><table class="table luxury-table align-middle"><thead><tr><th>Empresa</th><th>NIT</th><th>Contacto</th><th>Ubicación</th><th>Estado</th><th class="text-end">Acciones</th></tr></thead><tbody id="recordsTable"></tbody></table></div>
+        <div class="empty-state d-none" id="emptyState"><span class="empty-icon"><i class="bi bi-building"></i></span><strong>No hay proveedores para mostrar</strong><p>Agrega un aliado o ajusta la búsqueda.</p></div>
+    </section>
+</main>
+</html>

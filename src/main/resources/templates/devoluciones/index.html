@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: page('Devoluciones', 'devoluciones', ~{::main})}">
+<main data-module="devoluciones">
+    <div class="page-intro">
+        <div><span class="eyebrow">SERVICIO CON CUIDADO</span><h1>Devoluciones</h1><p>Registra solicitudes y consulta su estado con trazabilidad sobre la venta original.</p></div>
+        <span class="page-ornament"><i class="bi bi-arrow-return-left"></i></span>
+    </div>
+    <section class="content-card editor-card">
+        <div class="section-heading compact"><div><span class="eyebrow">ATENCIÓN AL CLIENTE</span><h2>Registrar devolución</h2></div><span class="operation-badge"><i class="bi bi-arrow-repeat"></i> Validación de cantidades</span></div>
+        <form id="returnForm" th:action="@{/api/devoluciones}" method="post" novalidate>
+            <div class="form-grid">
+                <label class="form-label form-span-2">Producto vendido<select class="form-select" name="idDetalleVenta" id="returnDetail" required><option value="">Cargando ventas...</option></select></label>
+                <label class="form-label">Usuario que registra<select class="form-select" name="idUsuario" id="returnUser" required><option value="">Cargando usuarios...</option></select></label>
+                <label class="form-label">Cantidad a devolver<input class="form-control" name="cantidad" type="number" min="1" step="1" required></label>
+                <label class="form-label">Estado de la solicitud<select class="form-select" name="estado" required><option value="Solicitada">Solicitada</option><option value="Aprobada">Aprobada</option><option value="Rechazada">Rechazada</option><option value="Finalizada">Finalizada</option></select></label>
+                <label class="form-label">Estado del producto<select class="form-select" name="estadoProducto" required><option value="Bueno">Bueno</option><option value="Dañado">Dañado</option><option value="Abierto">Abierto</option></select></label>
+                <label class="form-label form-span-2">Motivo<input class="form-control" name="motivo" maxlength="250" required></label>
+                <label class="form-label form-span-2">Observaciones<textarea class="form-control" name="observaciones" rows="2"></textarea></label>
+            </div>
+            <p class="form-hint"><i class="bi bi-info-circle"></i> La base de datos valida que no se devuelva más de lo vendido. Los productos en buen estado se reintegran según las reglas del esquema.</p>
+            <div class="form-actions"><button class="btn btn-gold" type="submit"><i class="bi bi-check2"></i> Registrar devolución</button></div>
+        </form>
+    </section>
+    <section class="content-card">
+        <div class="section-heading compact list-heading"><div><span class="eyebrow">SEGUIMIENTO</span><h2>Historial de devoluciones</h2></div><form class="search-box" method="get" th:action="@{/devoluciones}"><i class="bi bi-search"></i><input id="tableSearch" name="q" type="search" placeholder="Buscar por motivo..." aria-label="Buscar devolución"><button class="search-submit" type="submit" aria-label="Buscar"><i class="bi bi-arrow-return-left"></i></button></form></div>
+        <div class="table-responsive"><table class="table luxury-table align-middle"><thead><tr><th>Devolución</th><th>Detalle de venta</th><th>Fecha</th><th>Cantidad</th><th>Motivo</th><th>Estado</th><th>Producto</th></tr></thead><tbody id="recordsTable"></tbody></table></div>
+        <div class="empty-state d-none" id="emptyState"><span class="empty-icon"><i class="bi bi-arrow-return-left"></i></span><strong>No hay devoluciones registradas</strong><p>Las solicitudes aparecerán aquí.</p></div>
+    </section>
+</main>
+</html>

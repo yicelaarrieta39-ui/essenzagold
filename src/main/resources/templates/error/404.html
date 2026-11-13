@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: page('Página no encontrada', '', ~{::main})}">
+<main>
+    <section class="content-card error-card">
+        <span class="error-code">404</span><span class="eyebrow">ESTA ESENCIA NO ESTÁ AQUÍ</span>
+        <h1>Página no encontrada</h1><p>El enlace solicitado no existe o ya no está disponible.</p>
+        <a class="btn btn-gold" th:href="@{/}"><i class="bi bi-house"></i> Volver al inicio</a>
+    </section>
+</main>
+</html>

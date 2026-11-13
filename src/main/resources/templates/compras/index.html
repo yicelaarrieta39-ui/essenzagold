@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: page('Compras', 'compras', ~{::main})}">
+<main data-module="compras">
+    <div class="page-intro">
+        <div><span class="eyebrow">ABASTECIMIENTO</span><h1>Compras e inventario</h1><p>Registra la recepción de productos y actualiza existencias en una sola operación.</p></div>
+        <span class="page-ornament"><i class="bi bi-box-seam"></i></span>
+    </div>
+    <section class="content-card operation-card">
+        <div class="section-heading compact"><div><span class="eyebrow">NUEVA RECEPCIÓN</span><h2>Detalle de compra</h2></div><span class="operation-badge"><i class="bi bi-shield-check"></i> Registro transaccional</span></div>
+        <form id="purchaseForm" th:action="@{/api/operaciones/compras}" method="post" novalidate>
+            <div class="form-grid">
+                <label class="form-label">Proveedor<select class="form-select" name="idProveedor" id="purchaseSupplier" required><option value="">Cargando proveedores...</option></select></label>
+                <label class="form-label">Usuario responsable<select class="form-select" name="idUsuario" id="purchaseUser" required><option value="">Cargando usuarios...</option></select></label>
+                <label class="form-label">Número de factura<input class="form-control" name="numeroFactura" maxlength="50"></label>
+                <label class="form-label">Método de pago<select class="form-select" name="metodoPago" required><option value="Efectivo">Efectivo</option><option value="Transferencia">Transferencia</option><option value="Tarjeta">Tarjeta</option><option value="Credito">Crédito</option></select></label>
+            </div>
+            <div class="line-entry">
+                <label class="form-label">Producto<select class="form-select" id="purchaseProduct"><option value="">Selecciona un producto</option></select></label>
+                <label class="form-label">Cantidad<input class="form-control" id="purchaseQuantity" type="number" min="1" step="1" value="1"></label>
+                <label class="form-label">Costo unitario<input class="form-control" id="purchasePrice" type="number" min="0" step="0.01"></label>
+                <button class="btn btn-outline-gold add-line-button" type="button" id="addPurchaseLine"><i class="bi bi-plus-lg"></i> Añadir</button>
+            </div>
+            <div class="table-responsive line-table">
+                <table class="table luxury-table align-middle"><thead><tr><th>Producto</th><th>Cantidad</th><th>Costo unitario</th><th>Subtotal</th><th></th></tr></thead><tbody id="purchaseLines"></tbody></table>
+                <div class="empty-inline" id="purchaseLinesEmpty">Añade al menos un producto para continuar.</div>
+            </div>
+            <div class="operation-bottom">
+                <label class="form-label notes-field">Observaciones<textarea class="form-control" name="observaciones" rows="2"></textarea></label>
+                <div class="total-box"><span>Total de compra</span><strong id="purchaseTotal">$ 0</strong><small>El inventario se actualiza al recibir la compra.</small></div>
+            </div>
+            <div class="form-actions"><button class="btn btn-gold" type="submit"><i class="bi bi-check2-circle"></i> Registrar compra</button></div>
+        </form>
+    </section>
+    <section class="content-card">
+        <div class="section-heading compact list-heading"><div><span class="eyebrow">HISTORIAL</span><h2>Compras registradas</h2></div><form class="search-box" method="get" th:action="@{/compras}"><i class="bi bi-search"></i><input id="tableSearch" name="q" type="search" placeholder="Buscar factura o proveedor..." aria-label="Buscar compra"><button class="search-submit" type="submit" aria-label="Buscar"><i class="bi bi-arrow-return-left"></i></button></form></div>
+        <div class="table-responsive"><table class="table luxury-table align-middle"><thead><tr><th>Compra</th><th>Proveedor</th><th>Fecha</th><th>Método de pago</th><th>Estado</th><th class="text-end">Total</th></tr></thead><tbody id="recordsTable"></tbody></table></div>
+        <div class="empty-state d-none" id="emptyState"><span class="empty-icon"><i class="bi bi-receipt"></i></span><strong>Aún no hay compras</strong><p>Las compras recibidas aparecerán aquí.</p></div>
+    </section>
+</main>
+</html>

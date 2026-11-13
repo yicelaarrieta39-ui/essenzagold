@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: page('Resumen', 'dashboard', ~{::main})}">
+<main data-module="dashboard">
+    <section class="hero-panel">
+        <div class="hero-copy">
+            <span class="eyebrow"><i class="bi bi-stars"></i> EL ARTE DE LA PERFUMERÍA</span>
+            <h1>Bienvenida a <em>Essenza Gold</em></h1>
+            <p>Administra tu inventario y crea experiencias memorables, esencia por esencia.</p>
+            <a class="btn btn-gold" th:href="@{/ventas}"><i class="bi bi-plus-lg"></i> Registrar una venta</a>
+        </div>
+        <div class="hero-bottle" aria-hidden="true"><i class="bi bi-droplet-half"></i></div>
+        <div class="hero-image-credit">FRAGANCIAS · ESENCIA · DISTINCIÓN</div>
+    </section>
+
+    <section class="section-block">
+        <div class="section-heading">
+            <div><span class="eyebrow">A PRIMERA VISTA</span><h2>El pulso de tu negocio</h2></div>
+            <span class="updated-label"><i class="bi bi-arrow-repeat"></i> Datos actuales</span>
+        </div>
+        <div class="stats-grid">
+            <article class="stat-card"><span class="stat-icon blush"><i class="bi bi-droplet"></i></span><div><span>Productos</span><strong th:text="${totalProductos}">0</strong><small>referencias en catálogo</small></div><a th:href="@{/productos}" aria-label="Ver productos"><i class="bi bi-arrow-up-right"></i></a></article>
+            <article class="stat-card"><span class="stat-icon gold"><i class="bi bi-bag-heart"></i></span><div><span>Ventas registradas</span><strong th:text="${totalVentas}">0</strong><small>operaciones completadas</small></div><a th:href="@{/ventas}" aria-label="Ver ventas"><i class="bi bi-arrow-up-right"></i></a></article>
+            <article class="stat-card"><span class="stat-icon sand"><i class="bi bi-box-seam"></i></span><div><span>Compras</span><strong th:text="${totalCompras}">0</strong><small>ingresos a inventario</small></div><a th:href="@{/compras}" aria-label="Ver compras"><i class="bi bi-arrow-up-right"></i></a></article>
+            <article class="stat-card"><span class="stat-icon cocoa"><i class="bi bi-people"></i></span><div><span>Usuarios</span><strong th:text="${totalUsuarios}">0</strong><small>del equipo Essenza</small></div><a th:href="@{/usuarios}" aria-label="Ver usuarios"><i class="bi bi-arrow-up-right"></i></a></article>
+        </div>
+    </section>
+
+    <section class="section-block dashboard-lower">
+        <article class="content-card inventory-card">
+            <div class="section-heading compact">
+                <div><span class="eyebrow">CONTROL PREVENTIVO</span><h2>Atención al inventario</h2></div>
+                <span class="count-pill" th:text="${#lists.size(inventarioBajo)} + ' alertas'">0 alertas</span>
+            </div>
+            <div class="empty-state" th:if="${#lists.isEmpty(inventarioBajo)}">
+                <span class="empty-icon"><i class="bi bi-check2-circle"></i></span>
+                <strong>Todo en equilibrio</strong><p>No hay productos bajo su nivel mínimo.</p>
+            </div>
+            <div class="table-responsive" th:unless="${#lists.isEmpty(inventarioBajo)}">
+                <table class="table luxury-table align-middle mb-0">
+                    <thead><tr><th>Producto</th><th>Categoría</th><th>Existencias</th><th>Mínimo</th><th></th></tr></thead>
+                    <tbody><tr th:each="producto : ${inventarioBajo}">
+                        <td><strong th:text="${producto.nombre}">Perfume</strong><small class="d-block text-muted" th:text="${producto.codigo}">Código</small></td>
+                        <td th:text="${producto.categoria}">Esencia</td>
+                        <td><span class="stock-warning" th:text="${producto.stock}">0</span></td>
+                        <td th:text="${producto.stockMinimo}">0</td>
+                        <td><a class="table-action" th:href="@{/productos}" aria-label="Ir a productos"><i class="bi bi-arrow-right"></i></a></td>
+                    </tr></tbody>
+                </table>
+            </div>
+        </article>
+        <aside class="content-card revenue-card">
+            <span class="eyebrow">VENTAS ACUMULADAS</span>
+            <span class="revenue-icon"><i class="bi bi-graph-up-arrow"></i></span>
+            <strong class="revenue-total" th:text="${#numbers.formatCurrency(ventasFacturadas)}">$ 0</strong>
+            <p>Total de ventas completadas registradas en el sistema.</p>
+            <a th:href="@{/ventas}">Explorar ventas <i class="bi bi-arrow-right"></i></a>
+        </aside>
+    </section>
+</main>
+</html>

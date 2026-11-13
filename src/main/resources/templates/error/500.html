@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/base :: page('Ocurrió un error', '', ~{::main})}">
+<main>
+    <section class="content-card error-card">
+        <span class="error-code">!</span><span class="eyebrow">UN MOMENTO, POR FAVOR</span>
+        <h1>No pudimos completar la solicitud</h1><p>Intenta nuevamente. Si el problema continúa, verifica la conexión con la base de datos.</p>
+        <a class="btn btn-gold" th:href="@{/}"><i class="bi bi-arrow-clockwise"></i> Volver al inicio</a>
+    </section>
+</main>
+</html>
